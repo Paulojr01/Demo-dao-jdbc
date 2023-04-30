@@ -19,7 +19,7 @@ public class Main {
 
         do {
             System.out.print(
-                    "\n\nDigite uma opção que deseja realizar:\n\n 1 - Busca por ID\n 2 - Busca por departamento \n 3 - Todos os vendedores \n 0 - Encerrar Programa \n --> ");
+                    "\n\nDigite uma opção que deseja realizar:\n\n 1 - Busca por ID\n 2 - Busca por departamento \n 3 - Todos os vendedores \n 4 - Insira um novo vendedor \n 5 - Atualizar vendedor \n 0 - Encerrar Programa \n --> ");
             opcao = ler.nextLine();
             ler = new Scanner(System.in);
             Limpa.Console();
@@ -52,6 +52,7 @@ public class Main {
                     ler.nextLine();
                     ler.nextLine();
                     break;
+
                 case"3":
 
                     ler = new Scanner(System.in);
@@ -68,6 +69,29 @@ public class Main {
                     ler.nextLine();
 
                 break;
+
+                case "4":
+                    ler = new Scanner(System.in);
+                    System.out.println("Digite o Nome do vendedor: ");
+                    String nome = ler.nextLine();
+                    System.out.println("Digite o Email do vendedor: ");
+                    String email = ler.nextLine();
+                    System.out.println("Digite o salario base do vendedor: ");
+                    Double salario = ler.nextDouble();
+                    ler.nextLine();
+                    System.out.println("Digite o ID do departamento: ");
+                    int id2 = ler.nextInt();
+                    ler.nextLine();
+
+                    Department dep = new Department(id2, null);
+                    Seller newSeller = new Seller(null, nome, email, new Date(), salario, dep);
+
+                    sellerDao = DaoFactory.createSellerDao();
+                    sellerDao.insert(newSeller);
+                    System.out.println("Inserido! novo id = " + newSeller.getId());
+
+                    break;
+
 
                 case "0":
                     System.out.println("Programa encerrando....");
