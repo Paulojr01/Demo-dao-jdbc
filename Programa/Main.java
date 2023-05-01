@@ -7,6 +7,7 @@ import model.entities.Department;
 import model.entities.Seller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -19,7 +20,7 @@ public class Main {
 
         do {
             System.out.print(
-                    "\n\nDigite uma opção que deseja realizar:\n\n 1 - Busca por ID\n 2 - Busca por departamento \n 3 - Todos os vendedores \n 4 - Insira um novo vendedor \n 5 - Atualizar vendedor \n 0 - Encerrar Programa \n --> ");
+                    "\n\nDigite uma opção que deseja realizar:\n\n 1 - Busca por ID\n 2 - Busca por departamento \n 3 - Todos os vendedores \n 4 - Insira um novo vendedor \n 5 - Atualizar vendedor \n 6 - Deletar vendedor \n 0 - Encerrar Programa \n --> ");
             opcao = ler.nextLine();
             ler = new Scanner(System.in);
             Limpa.Console();
@@ -88,10 +89,116 @@ public class Main {
 
                     sellerDao = DaoFactory.createSellerDao();
                     sellerDao.insert(newSeller);
-                    System.out.println("Inserido! novo id = " + newSeller.getId());
+                    System.out.print("Inserido! novo id = " + newSeller.getId());
 
                     break;
 
+                case "5":
+                    String opcao2 = "";
+                    do {
+                        System.out.print(
+                                "\n\nAlterar dados do vendedor:\n\n 1 - Alterar nome do vendedor\n 2 - Alterar email do vendedor \n 3 - Alterar data de nascimento do vendedor \n 4 - Alterar salario do vendedor \n 5 - Alterar departamento do vendedor \n 0 - Encerrar Programa \n --> ");
+                        opcao2 = ler.nextLine();
+                        ler = new Scanner(System.in);
+                        Limpa.Console();
+
+                        switch (opcao2){
+                            case "1":
+                                System.out.println("Digite primeiro o Id do vendedor: ");
+                                int idUp = ler.nextInt();
+                                ler.nextLine();
+                                sellerDao = DaoFactory.createSellerDao();
+                                seller = sellerDao.findById(idUp);
+                                System.out.println("Alterar nome do vendedor: ");
+                                String setNome = ler.nextLine();
+                                seller.setName(setNome);
+                                sellerDao.update(seller);
+                                System.out.print("Nome alterado com sucesso!");
+                            break;
+
+                            case "2":
+                                System.out.println("Digite primeiro o Id do vendedor: ");
+                                idUp = ler.nextInt();
+                                ler.nextLine();
+                                sellerDao = DaoFactory.createSellerDao();
+                                seller = sellerDao.findById(idUp);
+                                System.out.println("Alterar email do vendedor: ");
+                                String setEmail = ler.nextLine();
+                                seller.setEmail(setEmail);
+                                sellerDao.update(seller);
+                                System.out.print("Email alterado com sucesso!");
+                                break;
+
+                            case"3":
+                                System.out.println("Digite primeiro o Id do vendedor: ");
+                                idUp = ler.nextInt();
+                                ler.nextLine();
+                                sellerDao = DaoFactory.createSellerDao();
+                                seller = sellerDao.findById(idUp);
+                                System.out.print("Digite  data do nascimento do vendedor (no formato yyyy/MM/dd): ");
+                                String dataString = ler.nextLine();
+                                SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
+                                Date data = null;
+                                try {
+                                    data = formato.parse(dataString);
+                                } catch (Exception e) {
+                                    System.out.println("Data inválida!");
+                                    System.exit(0);
+                                }
+                                seller.setBirthDate(data);
+                                sellerDao.update(seller);
+                                System.out.print("Salario alterado com sucesso!");
+
+                                break;
+
+                            case"4":
+                                System.out.println("Digite primeiro o Id do vendedor: ");
+                                idUp = ler.nextInt();
+                                ler.nextLine();
+                                sellerDao = DaoFactory.createSellerDao();
+                                seller = sellerDao.findById(idUp);
+                                System.out.println("Alterar salario do vendedor: ");
+                                double setSalario = ler.nextDouble();
+                                ler.nextLine();
+                                seller.setBaseSalary(setSalario);
+                                sellerDao.update(seller);
+                                System.out.print("Salario alterado com sucesso!");
+                                break;
+
+                            case "5":
+                                System.out.println("Digite primeiro o Id do vendedor: ");
+                                idUp = ler.nextInt();
+                                ler.nextLine();
+                                sellerDao = DaoFactory.createSellerDao();
+                                seller = sellerDao.findById(idUp);
+                                System.out.println("Digite o número do novo departamento do vendedor: ");
+                                int setDep = ler.nextInt();
+                                Department department1 = new Department(setDep, null);
+                                ler.nextLine();
+                                seller.setDepartment(department1);
+                                sellerDao.update(seller);
+                                System.out.print("Departamento  alterado com sucesso!");
+                                break;
+                        }
+
+
+
+                    } while (!opcao2.equals("0"));
+
+
+
+                    break;
+
+                case "6":
+                    ler = new Scanner(System.in);
+                    System.out.println("Digite o Id do vendedor que deseja deletar: ");
+                    int idDel = ler.nextInt();
+                    ler.nextLine();
+                    sellerDao = DaoFactory.createSellerDao();
+                    sellerDao.deleteById(idDel);
+
+                    System.out.print("id deletado com sucesso!");
+                    break;
 
                 case "0":
                     System.out.println("Programa encerrando....");
