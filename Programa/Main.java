@@ -2,6 +2,7 @@ package Programa;
 
 import LimpaConsole.Limpa;
 import model.dao.DaoFactory;
+import model.dao.DepartmentDao;
 import model.dao.SellerDao;
 import model.entities.Department;
 import model.entities.Seller;
@@ -18,11 +19,10 @@ public class Main {
         Scanner ler = new Scanner(System.in);
         String opcao = "";
 
-        do {
+        /* do {
             System.out.print(
-                    "\n\nDigite uma opção que deseja realizar:\n\n 1 - Busca por ID\n 2 - Busca por departamento \n 3 - Todos os vendedores \n 4 - Insira um novo vendedor \n 5 - Atualizar vendedor \n 6 - Deletar vendedor \n 0 - Encerrar Programa \n --> ");
-            opcao = ler.nextLine();
-            ler = new Scanner(System.in);
+                    "\n\nDigite uma opção que deseja realizar:\n\n 1 - Vendedores \n 2 - Busca por departamento \n 3 - Todos os vendedores \n 4 - Insira um novo vendedor \n 5 - Atualizar vendedor \n 6 - Deletar vendedor \n 0 - Encerrar Programa \n --> ");
+            opcao = ler.next();
             Limpa.Console();
 
             switch (opcao) {
@@ -42,11 +42,11 @@ public class Main {
                     System.out.println("Digite o ID do departamento: ");
                     id = ler.nextInt();
 
-                    System.out.print("Dados dos vendedores deste departamento: \n" );
+                    System.out.print("Dados dos vendedores deste departamento: \n");
                     SellerDao sellerDao2 = DaoFactory.createSellerDao();
-                    Department department = new Department(id,null);
+                    Department department = new Department(id, null);
                     List<Seller> list = sellerDao2.findByDepartment(department);
-                    for (Seller obj : list){
+                    for (Seller obj : list) {
                         System.out.println(obj);
                     }
                     System.out.println("\nPressione  tecla enter para voltar ao menu.");
@@ -54,14 +54,14 @@ public class Main {
                     ler.nextLine();
                     break;
 
-                case"3":
+                case "3":
 
                     ler = new Scanner(System.in);
                     System.out.println("Digite o all para retorna todos os vendedores : ");
                     String all = ler.nextLine();
                     SellerDao sellerDao3 = DaoFactory.createSellerDao();
                     list = sellerDao3.findAll();
-                    for (Seller obj : list){
+                    for (Seller obj : list) {
                         System.out.println(obj);
                     }
 
@@ -69,7 +69,7 @@ public class Main {
                     ler.nextLine();
                     ler.nextLine();
 
-                break;
+                    break;
 
                 case "4":
                     ler = new Scanner(System.in);
@@ -102,7 +102,7 @@ public class Main {
                         ler = new Scanner(System.in);
                         Limpa.Console();
 
-                        switch (opcao2){
+                        switch (opcao2) {
                             case "1":
                                 System.out.println("Digite primeiro o Id do vendedor: ");
                                 int idUp = ler.nextInt();
@@ -114,7 +114,7 @@ public class Main {
                                 seller.setName(setNome);
                                 sellerDao.update(seller);
                                 System.out.print("Nome alterado com sucesso!");
-                            break;
+                                break;
 
                             case "2":
                                 System.out.println("Digite primeiro o Id do vendedor: ");
@@ -129,7 +129,7 @@ public class Main {
                                 System.out.print("Email alterado com sucesso!");
                                 break;
 
-                            case"3":
+                            case "3":
                                 System.out.println("Digite primeiro o Id do vendedor: ");
                                 idUp = ler.nextInt();
                                 ler.nextLine();
@@ -151,7 +151,7 @@ public class Main {
 
                                 break;
 
-                            case"4":
+                            case "4":
                                 System.out.println("Digite primeiro o Id do vendedor: ");
                                 idUp = ler.nextInt();
                                 ler.nextLine();
@@ -182,10 +182,7 @@ public class Main {
                         }
 
 
-
-                    } while (!opcao2.equals("0"));
-
-
+                    } while (!opcao2.equals("0")); //
 
                     break;
 
@@ -205,7 +202,6 @@ public class Main {
                     break;
 
 
-
                 default:
                     System.out.println("Opção inválida");
                     break;
@@ -213,11 +209,52 @@ public class Main {
 
             }
 
-        } while (!opcao.equals("0"));
+        } while (!opcao.equals("0")); */
+
+        do {
+            System.out.print(
+                    "\n\nDigite uma opção que deseja realizar:\n\n 1 - Busca por departamento \n 2 - Mostrar Todos os departamento \n 3 - Insira um novo departamento \n 4 - Atualizar nome do departamento \n 5 - Deletar departamento por id \n 0 - Encerrar Programa \n --> ");
+            opcao = ler.next();
+            Limpa.Console();
+
+            switch (opcao) {
+                case "1":
+
+                    break;
+
+                case"2":
+                    ler = new Scanner(System.in);
+                    System.out.println("Digite all para retorna todos os departamento: ");
+                    String all = ler.next();
+                    DepartmentDao departamentDao = DaoFactory.createdepartmentDaoDao();
+                    List<Department> list = departamentDao.findAll();
+                    System.out.print("TODOS OS DEPARTAMENTOS \n");
+                    for (Department obj : list ){
+                        System.out.print(obj);
+                        System.out.println();
+                    }
+                    break;
+
+                case"3":
+                    ler = new Scanner(System.in);
+                    System.out.println("Digite o Id do novo departamento: ");
+                    int idDep = ler.nextInt();
+                    System.out.println("Digite o nome do novo departamento: ");
+                    String nomeDep = ler.next();
+                    departamentDao = DaoFactory.createdepartmentDaoDao();
+                    Department department = new Department(idDep, nomeDep);
+                    departamentDao.insert(department);
+                    System.out.print("Departamento criado");
+                    break;
+                case"4":
+                    break;
+                case"5":
+                    break;
+            }
 
 
 
-
+        }while (!opcao.equals("0")) ;
 
     }
 }
