@@ -47,7 +47,8 @@ public class Main {
                     Department department = new Department(id, null);
                     List<Seller> list = sellerDao2.findByDepartment(department);
                     for (Seller obj : list) {
-                        System.out.println(obj);
+                        System.out.println(obj)
+                        System.out.println();;
                     }
                     System.out.println("\nPressione  tecla enter para voltar ao menu.");
                     ler.nextLine();
@@ -62,7 +63,8 @@ public class Main {
                     SellerDao sellerDao3 = DaoFactory.createSellerDao();
                     list = sellerDao3.findAll();
                     for (Seller obj : list) {
-                        System.out.println(obj);
+                        System.out.println(obj)
+                        System.out.println();;
                     }
 
                     System.out.println("\nPressione  tecla enter para voltar ao menu.");
@@ -220,13 +222,20 @@ public class Main {
             switch (opcao) {
                 case "1":
 
+                    ler = new Scanner(System.in);
+                    System.out.println("Digite o id do departamento: ");
+                    int idDep2 = ler.nextInt();
+                    DepartmentDao departamentDao = DaoFactory.createdepartmentDaoDao();
+                    Department departamentDao1 = departamentDao.findById(idDep2);
+                    System.out.print("DEPARTAMENTO \n" + departamentDao1);
+
                     break;
 
                 case"2":
                     ler = new Scanner(System.in);
                     System.out.println("Digite all para retorna todos os departamento: ");
                     String all = ler.next();
-                    DepartmentDao departamentDao = DaoFactory.createdepartmentDaoDao();
+                     departamentDao = DaoFactory.createdepartmentDaoDao();
                     List<Department> list = departamentDao.findAll();
                     System.out.print("TODOS OS DEPARTAMENTOS \n");
                     for (Department obj : list ){
@@ -247,6 +256,16 @@ public class Main {
                     System.out.print("Departamento criado");
                     break;
                 case"4":
+                    ler = new Scanner(System.in);
+                    System.out.println("Digite o Id do departamento que deseja altera : ");
+                    idDep = ler.nextInt();
+                    departamentDao = DaoFactory.createdepartmentDaoDao();
+                    departamentDao1 = departamentDao.findById(idDep);
+                    System.out.println("Digite o nome que deseja alterar: ");
+                    String setName = ler.next();
+                    departamentDao1.setName(setName);
+                    departamentDao.update(departamentDao1);
+                    System.out.print("Nome alterado com sucesso");
                     break;
                 case"5":
                     break;
