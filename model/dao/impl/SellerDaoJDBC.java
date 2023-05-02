@@ -38,9 +38,9 @@ public class SellerDaoJDBC implements SellerDao {
             st.setDouble(4, obj.getBaseSalary());
             st.setInt(5, obj.getDepartment().getId());
 
-            int rowsAffected = st.executeUpdate();
+            int linhas = st.executeUpdate();
 
-            if (rowsAffected > 0) {
+            if (linhas > 0) {
                 ResultSet rs = st.getGeneratedKeys();
                 if (rs.next()) {
                     int id = rs.getInt(1);
